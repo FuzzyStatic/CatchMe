@@ -3,18 +3,25 @@ package com.fuzzycraft.fuzzy;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.fuzzycraft.fuzzy.listeners.PlayerServerStatus;
+import com.fuzzycraft.fuzzy.listeners.CaughtCatchee;
+import com.fuzzycraft.fuzzy.listeners.SelectCatchee;
 
 public class CatchMe extends JavaPlugin {
 
-	private PlayerServerStatus pj;
+	private Catchee catchee;
+	private SelectCatchee sc;
+	private CaughtCatchee cc;
 	
 	public void onEnable() {
+		catchee = new Catchee(this, Constants.TIMER);
+		
 		// Create listener instances
-		pj = new PlayerServerStatus(this);
+		sc = new SelectCatchee(catchee);
+		cc = new CaughtCatchee(catchee);
 
 		// Register listeners
 		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(pj, this);
+		pm.registerEvents(sc, this);
+		pm.registerEvents(cc, this);
 	}		
 }
