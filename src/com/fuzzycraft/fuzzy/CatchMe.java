@@ -6,6 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.fuzzycraft.fuzzy.listeners.CaughtCatchee;
 import com.fuzzycraft.fuzzy.listeners.SelectCatchee;
 
+/**
+ * 
+ * @author FuzzyStatic (fuzzy@fuzzycraft.com)
+ *
+ */
+
 public class CatchMe extends JavaPlugin {
 
 	private Catchee catchee;

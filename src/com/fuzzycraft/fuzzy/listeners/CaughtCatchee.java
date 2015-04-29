@@ -8,6 +8,12 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import com.fuzzycraft.fuzzy.Catchee;
 
+/**
+ * 
+ * @author FuzzyStatic (fuzzy@fuzzycraft.com)
+ *
+ */
+
 public class CaughtCatchee implements Listener {
 
 	private Catchee catchee;
@@ -16,6 +22,10 @@ public class CaughtCatchee implements Listener {
 		this.catchee = catchee;
 	}
 	
+	/**
+	 * Give catcher random item when he catches catchee.
+	 * @param event
+	 */
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		Player catcher = event.getPlayer();
