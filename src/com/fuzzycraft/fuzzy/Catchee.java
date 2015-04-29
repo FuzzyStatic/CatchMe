@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -22,7 +23,7 @@ public class Catchee {
 	private Player catchee;
 	
 	/**
-	 * Set up initial catchee
+	 * Set up initial catchee.
 	 * @param plugin
 	 * @param timer
 	 */
@@ -31,26 +32,27 @@ public class Catchee {
 		this.timer = timer;
 		this.ready = true;
 		this.setOnlinePlayers();
-		this.setCatchee(null);
+		this.newCatchee(null);
 	}
 	
 	/**
-	 * Find online players
+	 * Find online players.
 	 */
 	public void setOnlinePlayers() {
 		this.onlinePlayers = this.plugin.getServer().getOnlinePlayers();
 	}
 
 	/**
-	 * Set the current catchee if there are enough players online.
+	 * Set a new catchee if there are enough players online.
 	 * @param currentCatchee
 	 */
-	public void setCatchee(Player currentCatchee) {
+	public void newCatchee(Player currentCatchee) {
 		if (this.onlinePlayers.size() >= Constants.MIN_PLAYERS) {
 			if (currentCatchee == null) {
 				// Return random player
-				this.catchee = (Player) this.onlinePlayers.toArray()[new Random().nextInt(this.onlinePlayers.size())];			
+				this.catchee = (Player) this.onlinePlayers.toArray()[new Random().nextInt(this.onlinePlayers.size())];
 			}
+			this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.catchee.getName() + Constants.CATCHEE_ALERT);
 			return;
 		}
 		this.catchee = null;
@@ -66,7 +68,7 @@ public class Catchee {
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
 			public void run() {
 				ready = true;
-				setCatchee(getCatchee());
+				newCatchee(catchee);
 			}	
 		}, this.timer);
 	}

@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import com.fuzzycraft.fuzzy.Catchee;
+import com.fuzzycraft.fuzzy.ItemGiver;
 
 /**
  * 
@@ -18,6 +19,10 @@ public class CaughtCatchee implements Listener {
 
 	private Catchee catchee;
 		
+	/**
+	 * Insert catchee to catch.
+	 * @param catchee
+	 */
 	public CaughtCatchee(Catchee catchee) {
 		this.catchee = catchee;
 	}
@@ -30,9 +35,10 @@ public class CaughtCatchee implements Listener {
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		Player catcher = event.getPlayer();
 
-		if (event.getRightClicked() instanceof Player && event.getRightClicked().equals(this.catchee.getCatchee())) {
+		if (event.getRightClicked().equals(this.catchee.getCatchee()) && catchee.ready()) {
 			this.catchee.timer();
-			System.out.println(event.getRightClicked().getName());
+			catcher.sendMessage("You've caught " + this.catchee.getCatchee().getName() + "! Congratulations! Have a reward!");
+			new ItemGiver(catcher).giveItem();
 		}
 	}
 }

@@ -19,11 +19,12 @@ public class CatchMe extends JavaPlugin {
 	private CaughtCatchee cc;
 	
 	public void onEnable() {
-		catchee = new Catchee(this, Constants.TIMER);
+		this.catchee = new Catchee(this, Constants.TIMER);
+		this.catchee.newCatchee(null);
 		
 		// Create listener instances
-		sc = new SelectCatchee(catchee);
-		cc = new CaughtCatchee(catchee);
+		sc = new SelectCatchee(this.catchee);
+		cc = new CaughtCatchee(this.catchee);
 
 		// Register listeners
 		PluginManager pm = getServer().getPluginManager();

@@ -1,6 +1,5 @@
 package com.fuzzycraft.fuzzy.listeners;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -35,19 +34,8 @@ public class SelectCatchee implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
 		this.catchee.setOnlinePlayers();
 		if (this.catchee.ready()) {
-			this.catchee.setCatchee(this.catchee.getCatchee());
+			this.catchee.newCatchee(this.catchee.getCatchee());
 		}
-		
-		for (Player player : this.catchee.onlinePlayers()) {
-			System.out.println(player.getName());
-		}
-		
-		if (this.catchee.getCatchee() != null) {
-			System.out.println(this.catchee.getCatchee().getName());
-		} else {
-			System.out.println("Not enough players on.");
-		}
-		
     }
 	
 	/**
@@ -58,12 +46,7 @@ public class SelectCatchee implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
 		this.catchee.setOnlinePlayers();
 		if (this.catchee.ready()) {
-			this.catchee.setCatchee(this.catchee.getCatchee());
+			this.catchee.newCatchee(this.catchee.getCatchee());
 		}
-		
-		for (Player player : this.catchee.onlinePlayers()) {
-			System.out.println(player.getName());
-		}
-		
     }
 }
