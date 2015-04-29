@@ -5,27 +5,44 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.fuzzycraft.fuzzy.CatchMe;
 import com.fuzzycraft.fuzzy.PlayerChecker;
 
-public class PlayerServerStatus extends PlayerChecker implements Listener {
+public class PlayerServerStatus implements Listener {
 
+	private PlayerChecker pc;
+	
 	public PlayerServerStatus(CatchMe plugin) {
-		super(plugin);
+		this.pc = new PlayerChecker(plugin);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onplayerjoin(PlayerJoinEvent event) {
-		for (Player player : super.onlinePlayers()) {
+    public void onPlayerJoin(PlayerJoinEvent event) {
+		this.pc.setOnlinePlayers();
+		this.pc.setCatchee(this.pc.getCatchee());
+		
+		for (Player player : this.pc.onlinePlayers()) {
 			System.out.println(player.getName());
 		}
-		if (super.catchee != null) {
-			System.out.println(super.catchee.getName());
+		
+		if (this.pc.getCatchee() != null) {
+			System.out.println(this.pc.getCatchee().getName());
 		} else {
 			System.out.println("Not enough players on.");
 		}
+		
     }
 	
-	
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onPlayerQuit(PlayerQuitEvent event) {
+		this.pc.setOnlinePlayers();
+		this.pc.setCatchee(this.pc.getCatchee());
+		
+		for (Player player : this.pc.onlinePlayers()) {
+			System.out.println(player.getName());
+		}
+		
+    }
 }
