@@ -1,4 +1,4 @@
-package com.fuzzycraft.fuzzy;
+package com.fuzzycraft.fuzzy.players;
 
 import java.util.Collection;
 import java.util.Random;
@@ -6,6 +6,9 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import com.fuzzycraft.fuzzy.CatchMe;
+import com.fuzzycraft.fuzzy.utilities.Constants;
 
 /**
  * 
@@ -33,7 +36,7 @@ public class Catchee {
 		this.perm = perm;
 		this.timer = timer;
 		this.ready = true;
-		this.setOnlinePlayers();
+		this.setOnlinePlayersWithPerm();
 		this.newCatchee(null);
 	}
 	
@@ -103,6 +106,22 @@ public class Catchee {
 	 */
 	public Player getCatchee() {
 		return this.catchee;
+	}
+	
+	/**
+	 * Return permission.
+	 * @return
+	 */
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	/**
+	 * Return timer.
+	 * @return
+	 */
+	public int getTimer() {
+		return this.timer;
 	}
 	
 	/**
