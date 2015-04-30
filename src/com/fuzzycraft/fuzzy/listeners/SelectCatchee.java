@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import com.fuzzycraft.fuzzy.Catchee;
+import com.fuzzycraft.fuzzy.players.Catchee;
 
 /**
  * 
@@ -27,7 +27,7 @@ public class SelectCatchee implements Listener {
 	}
 	
 	/**
-	 * Check if there are enough players, if catchee exists, and ifcatchee is ready.
+	 * Check if there are enough players, if catchee exists, and if catchee is ready.
 	 * @param event
 	 */
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -39,14 +39,18 @@ public class SelectCatchee implements Listener {
     }
 	
 	/**
-	 * Check if there are enough players, if catchee exists, and ifcatchee is ready.
+	 * Check if there are enough players, if catchee exists, and if catchee is ready.
 	 * @param event
 	 */
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {
 		this.catchee.setOnlinePlayersWithPerm();
 		if (this.catchee.ready()) {
-			this.catchee.newCatchee(this.catchee.getCatchee());
+			if (event.getPlayer().equals(this.catchee.getCatchee())) {
+				this.catchee.newCatchee(null);
+			} else {
+				this.catchee.newCatchee(this.catchee.getCatchee());
+			}
 		}
     }
 }

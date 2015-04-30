@@ -6,8 +6,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import com.fuzzycraft.fuzzy.Catchee;
-import com.fuzzycraft.fuzzy.ItemGiver;
+import com.fuzzycraft.fuzzy.players.Catchee;
+import com.fuzzycraft.fuzzy.utilities.ItemGiver;
 
 /**
  * 
@@ -18,13 +18,15 @@ import com.fuzzycraft.fuzzy.ItemGiver;
 public class CaughtCatchee implements Listener {
 
 	private Catchee catchee;
+	private String perm;
 		
 	/**
 	 * Insert catchee to catch.
 	 * @param catchee
 	 */
-	public CaughtCatchee(Catchee catchee) {
+	public CaughtCatchee(Catchee catchee, String perm) {
 		this.catchee = catchee;
+		this.perm = perm;
 	}
 	
 	/**
@@ -35,7 +37,7 @@ public class CaughtCatchee implements Listener {
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		Player catcher = event.getPlayer();
 
-		if (event.getRightClicked().equals(this.catchee.getCatchee()) && catchee.ready()) {
+		if (event.getRightClicked().equals(this.catchee.getCatchee()) && catchee.ready() && catcher.hasPermission(this.perm)) {
 			this.catchee.timer();
 			catcher.sendMessage("You've caught " + this.catchee.getCatchee().getName() + "! Congratulations! Have a reward!");
 			new ItemGiver(catcher).giveItem();

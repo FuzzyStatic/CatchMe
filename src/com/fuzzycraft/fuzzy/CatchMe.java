@@ -5,6 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.fuzzycraft.fuzzy.listeners.CaughtCatchee;
 import com.fuzzycraft.fuzzy.listeners.SelectCatchee;
+import com.fuzzycraft.fuzzy.players.Catchee;
+import com.fuzzycraft.fuzzy.utilities.Constants;
 
 /**
  * 
@@ -24,7 +26,7 @@ public class CatchMe extends JavaPlugin {
 		
 		// Create listener instances
 		sc = new SelectCatchee(this.catchee);
-		cc = new CaughtCatchee(this.catchee);
+		cc = new CaughtCatchee(this.catchee, Constants.PERM_CATCHER);
 
 		// Register listeners
 		PluginManager pm = getServer().getPluginManager();
