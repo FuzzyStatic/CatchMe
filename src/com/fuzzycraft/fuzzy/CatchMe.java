@@ -35,6 +35,6 @@ public class CatchMe extends JavaPlugin {
 		pm.registerEvents(cc, this);
 		
 		// Register commands.
-		getCommand("emsetcycle").setExecutor(new CatchWho(this, Constants.CATCHEE_ALERT));
+		getCommand("emsetcycle").setExecutor(new CatchWho(Constants.CATCHEE_ALERT));
 	}		
 }
