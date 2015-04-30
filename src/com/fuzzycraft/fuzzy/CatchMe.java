@@ -23,7 +23,7 @@ public class CatchMe extends JavaPlugin {
 	
 	public void onEnable() {
 		this.catchee = new Catchee(this, Constants.PERM_CATCHEE, Constants.CATCHEE_ALERT, Constants.TIMER);
-		this.catchee.newCatchee(null);
+		this.catchee.setNewCatchee(null);
 		
 		// Create listener instances.
 		sc = new SelectCatchee(this.catchee);

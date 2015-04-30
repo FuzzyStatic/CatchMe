@@ -35,7 +35,7 @@ public class SelectCatchee implements Listener {
 		this.catchee.setOnlinePlayersWithPerm(null);
 		
 		if (this.catchee.ready()) {
-			this.catchee.newCatchee(this.catchee.getCatchee());
+			this.catchee.setNewCatchee(this.catchee.getCatchee());
 		}
     }
 	
@@ -49,9 +49,9 @@ public class SelectCatchee implements Listener {
 		
 		if (this.catchee.ready()) {
 			if (event.getPlayer().equals(this.catchee.getCatchee())) {
-				this.catchee.newCatchee(null);
+				this.catchee.setNewCatchee(null);
 			} else {
-				this.catchee.newCatchee(this.catchee.getCatchee());
+				this.catchee.setNewCatchee(this.catchee.getCatchee());
 			}
 		}
     }

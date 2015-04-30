@@ -41,7 +41,7 @@ public class Catchee {
 		this.timer = timer;
 		this.ready = true;
 		this.setOnlinePlayersWithPerm(null);
-		this.newCatchee(null);
+		this.setNewCatchee(null);
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class Catchee {
 	 * Set a new catchee if there are enough players online.
 	 * @param currentCatchee
 	 */
-	public void newCatchee(Player currentCatchee) {
+	public void setNewCatchee(Player currentCatchee) {
 		if (this.players != null && this.players.size() >= Constants.MIN_PLAYERS) {
 			if (currentCatchee == null) {
 				// Return random player.
@@ -101,6 +101,7 @@ public class Catchee {
 			}
 			return;
 		}
+		
 		this.catchee = null;
 	}
 	
@@ -114,7 +115,7 @@ public class Catchee {
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
 			public void run() {
 				ready = true;
-				newCatchee(null);
+				setNewCatchee(null);
 			}	
 		}, this.timer);
 	}
@@ -134,6 +135,19 @@ public class Catchee {
 	public Player getCatchee() {
 		return this.catchee;
 	}
+	
+	/**
+	 * Return if catchee exists.
+	 * @return
+	 */
+	public boolean exists() {
+		if (this.catchee != null) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	
 	/**
 	 * Return permission.
