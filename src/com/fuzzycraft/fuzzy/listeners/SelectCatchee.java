@@ -46,7 +46,11 @@ public class SelectCatchee implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
 		this.catchee.setOnlinePlayers();
 		if (this.catchee.ready()) {
-			this.catchee.newCatchee(this.catchee.getCatchee());
+			if (event.getPlayer().equals(this.catchee.getCatchee())) {
+				this.catchee.newCatchee(null);
+			} else {
+				this.catchee.newCatchee(this.catchee.getCatchee());
+			}
 		}
     }
 }
