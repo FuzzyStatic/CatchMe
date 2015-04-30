@@ -32,7 +32,8 @@ public class SelectCatchee implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
-		this.catchee.setOnlinePlayersWithPerm();
+		this.catchee.setOnlinePlayersWithPerm(null);
+		
 		if (this.catchee.ready()) {
 			this.catchee.newCatchee(this.catchee.getCatchee());
 		}
@@ -43,8 +44,9 @@ public class SelectCatchee implements Listener {
 	 * @param event
 	 */
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onPlayerQuit(PlayerQuitEvent event) {
-		this.catchee.setOnlinePlayersWithPerm();
+    public void onPlayerQuit(PlayerQuitEvent event) {		
+		this.catchee.setOnlinePlayersWithPerm(this.catchee.getCatchee());
+		
 		if (this.catchee.ready()) {
 			if (event.getPlayer().equals(this.catchee.getCatchee())) {
 				this.catchee.newCatchee(null);

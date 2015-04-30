@@ -1,6 +1,8 @@
 package com.fuzzycraft.fuzzy.players;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -23,7 +25,7 @@ public class Catchee {
 	private int timer;
 	private boolean ready;
 	
-	private Collection<Player> onlinePlayers;
+	private Collection<? extends Player> players;
 	private Player catchee;
 	
 	/**
@@ -36,7 +38,7 @@ public class Catchee {
 		this.perm = perm;
 		this.timer = timer;
 		this.ready = true;
-		this.setOnlinePlayersWithPerm();
+		this.setOnlinePlayersWithPerm(null);
 		this.newCatchee(null);
 	}
 	
@@ -44,21 +46,44 @@ public class Catchee {
 	 * Find online players.
 	 */
 	@Deprecated
-	public void setOnlinePlayers() {
-		for (Player player : this.plugin.getServer().getOnlinePlayers()) {
-			this.onlinePlayers.add(player);
+	public void setOnlinePlayers(Player leavingPlayer) {
+		// Create mutable list of players.
+		List<Player> players = new ArrayList<Player>();
+				
+		for (Player player : this.plugin.getServer().getOnlinePlayers()) {					
+			players.add(player);
 		}
+				
+		// Remove leaving player.
+		if (leavingPlayer != null) {
+			players.remove(leavingPlayer);
+		}
+				
+		// Set collection of players to list.
+		this.players = players;
 	}
 	
 	/**
 	 * Find online players with permission.
+	 * @param player 
 	 */
-	public void setOnlinePlayersWithPerm() {
-		for (Player player : this.plugin.getServer().getOnlinePlayers()) {
+	public void setOnlinePlayersWithPerm(Player leavingPlayer) {
+		// Create mutable list of players.
+		List<Player> players = new ArrayList<Player>();
+		
+		for (Player player : this.plugin.getServer().getOnlinePlayers()) {			
 			if (player.hasPermission(this.perm)) {
-				this.onlinePlayers.add(player);
+				players.add(player);
 			}
 		}
+		
+		// Remove leaving player.
+		if (leavingPlayer != null) {
+			players.remove(leavingPlayer);
+		}
+		
+		// Set collection of players to list.
+		this.players = players;	
 	}
 
 	/**
@@ -66,10 +91,10 @@ public class Catchee {
 	 * @param currentCatchee
 	 */
 	public void newCatchee(Player currentCatchee) {
-		if (this.onlinePlayers.size() >= Constants.MIN_PLAYERS) {
+		if (this.players != null && this.players.size() >= Constants.MIN_PLAYERS) {
 			if (currentCatchee == null) {
-				// Return random player
-				this.catchee = (Player) this.onlinePlayers.toArray()[new Random().nextInt(this.onlinePlayers.size())];
+				// Return random player.
+				this.catchee = (Player) this.players.toArray()[new Random().nextInt(this.players.size())];
 				this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.catchee.getName() + Constants.CATCHEE_ALERT);
 			}
 			return;
@@ -87,7 +112,7 @@ public class Catchee {
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
 			public void run() {
 				ready = true;
-				newCatchee(catchee);
+				newCatchee(null);
 			}	
 		}, this.timer);
 	}
@@ -97,7 +122,7 @@ public class Catchee {
 	 * @return
 	 */
 	public Collection<? extends Player> onlinePlayers() {
-		return this.onlinePlayers;
+		return this.players;
 	}
 	
 	/**
