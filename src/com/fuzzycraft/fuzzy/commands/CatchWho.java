@@ -24,7 +24,7 @@ public class CatchWho implements CommandExecutor {
 		if (cmd.getName().equalsIgnoreCase("catchwho")) {
 			if (sender instanceof Player) {
 				if (this.catchee.exists()) {
-					sender.sendMessage(ChatColor.DARK_GREEN + this.catchee.getCatchee().getName() + ChatColor.AQUA + this.msgCatchee);
+					sender.sendMessage(ChatColor.GREEN + this.catchee.getCatchee().getName() + ChatColor.AQUA + this.msgCatchee);
 				} else {
 					sender.sendMessage(this.msgNoCatchee);
 				}
