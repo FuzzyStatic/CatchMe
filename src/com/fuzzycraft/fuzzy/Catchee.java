@@ -51,8 +51,8 @@ public class Catchee {
 			if (currentCatchee == null) {
 				// Return random player
 				this.catchee = (Player) this.onlinePlayers.toArray()[new Random().nextInt(this.onlinePlayers.size())];
+				this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.catchee.getName() + Constants.CATCHEE_ALERT);
 			}
-			this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.catchee.getName() + Constants.CATCHEE_ALERT);
 			return;
 		}
 		this.catchee = null;
