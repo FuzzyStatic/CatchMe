@@ -35,6 +35,6 @@ public class CatchMe extends JavaPlugin {
 		pm.registerEvents(cc, this);
 		
 		// Register commands.
-		getCommand("catchwho").setExecutor(new CatchWho(this.catchee, Constants.CATCHEE_ALERT));
+		getCommand("catchwho").setExecutor(new CatchWho(this.catchee, Constants.CATCHEE_ALERT, Constants.CATCHEE_ALERT_NONE));
 	}		
 }

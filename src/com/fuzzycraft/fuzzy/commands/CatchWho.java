@@ -11,18 +11,23 @@ import com.fuzzycraft.fuzzy.players.Catchee;
 public class CatchWho implements CommandExecutor {
 	
 	private Catchee catchee;
-	private String msg;
+	private String msgCatchee, msgNoCatchee;
 		
-	public CatchWho(Catchee catchee, String msg) {
+	public CatchWho(Catchee catchee, String msgCatchee, String msgNoCatchee) {
 		this.catchee = catchee;
-		this.msg = msg;
+		this.msgCatchee = msgCatchee;
+		this.msgNoCatchee = msgNoCatchee;
 	}
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("catchwho")) {
 			if (sender instanceof Player) {
-				sender.sendMessage(ChatColor.DARK_GREEN + this.catchee.getCatchee().getName() + ChatColor.AQUA + this.msg);
+				if (this.catchee.getCatchee() != null) {
+					sender.sendMessage(ChatColor.DARK_GREEN + this.catchee.getCatchee().getName() + ChatColor.AQUA + this.msgCatchee);
+				} else {
+					sender.sendMessage(this.msgNoCatchee);
+				}
 			}
 		}
 		return false;
