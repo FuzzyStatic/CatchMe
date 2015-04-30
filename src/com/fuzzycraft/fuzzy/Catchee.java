@@ -16,10 +16,11 @@ import org.bukkit.entity.Player;
 public class Catchee {
 	
 	private CatchMe plugin;
+	private String perm;
 	private int timer;
 	private boolean ready;
 	
-	private Collection<? extends Player> onlinePlayers;
+	private Collection<Player> onlinePlayers;
 	private Player catchee;
 	
 	/**
@@ -27,8 +28,9 @@ public class Catchee {
 	 * @param plugin
 	 * @param timer
 	 */
-	public Catchee(CatchMe plugin, int timer) {
+	public Catchee(CatchMe plugin, String perm, int timer) {
 		this.plugin = plugin;
+		this.perm = perm;
 		this.timer = timer;
 		this.ready = true;
 		this.setOnlinePlayers();
@@ -38,8 +40,22 @@ public class Catchee {
 	/**
 	 * Find online players.
 	 */
+	@Deprecated
 	public void setOnlinePlayers() {
-		this.onlinePlayers = this.plugin.getServer().getOnlinePlayers();
+		for (Player player : this.plugin.getServer().getOnlinePlayers()) {
+			this.onlinePlayers.add(player);
+		}
+	}
+	
+	/**
+	 * Find online players with permission.
+	 */
+	public void setOnlinePlayersWithPerm() {
+		for (Player player : this.plugin.getServer().getOnlinePlayers()) {
+			if (player.hasPermission(this.perm)) {
+				this.onlinePlayers.add(player);
+			}
+		}
 	}
 
 	/**
