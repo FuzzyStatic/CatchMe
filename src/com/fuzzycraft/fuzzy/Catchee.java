@@ -1,6 +1,5 @@
 package com.fuzzycraft.fuzzy;
 
-import java.util.Collection;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -19,7 +18,7 @@ public class Catchee {
 	private int timer;
 	private boolean ready;
 	
-	private Collection<? extends Player> onlinePlayers;
+	private Player[] onlinePlayers;
 	private Player catchee;
 	
 	/**
@@ -47,10 +46,10 @@ public class Catchee {
 	 * @param currentCatchee
 	 */
 	public void newCatchee(Player currentCatchee) {
-		if (this.onlinePlayers.size() >= Constants.MIN_PLAYERS) {
+		if (this.onlinePlayers.length >= Constants.MIN_PLAYERS) {
 			if (currentCatchee == null) {
 				// Return random player
-				this.catchee = (Player) this.onlinePlayers.toArray()[new Random().nextInt(this.onlinePlayers.size())];
+				this.catchee = (Player) this.onlinePlayers[new Random().nextInt(this.onlinePlayers.length)];
 			}
 			this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.catchee.getName() + Constants.CATCHEE_ALERT);
 			return;
@@ -77,7 +76,7 @@ public class Catchee {
 	 * Return onlinePlayers.
 	 * @return
 	 */
-	public Collection<? extends Player> onlinePlayers() {
+	public Player[] onlinePlayers() {
 		return this.onlinePlayers;
 	}
 	
