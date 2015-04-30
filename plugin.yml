@@ -1,6 +1,11 @@
 name:  CatchMe
 main:  com.fuzzycraft.fuzzy.CatchMe
-version:  1.2
+version:  1.2.1
+commands:
+    catchwho:
+        description: Who is IT?
+        permission: catchme.catchwho
+        default: true
 permissions:
     catchme.catchee:
         description: Let's a player become a catchee (become IT)

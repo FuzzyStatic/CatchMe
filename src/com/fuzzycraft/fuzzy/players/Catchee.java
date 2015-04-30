@@ -22,6 +22,7 @@ public class Catchee {
 	
 	private CatchMe plugin;
 	private String perm;
+	private String msg;
 	private int timer;
 	private boolean ready;
 	
@@ -33,9 +34,10 @@ public class Catchee {
 	 * @param plugin
 	 * @param timer
 	 */
-	public Catchee(CatchMe plugin, String perm, int timer) {
+	public Catchee(CatchMe plugin, String perm, String msg, int timer) {
 		this.plugin = plugin;
 		this.perm = perm;
+		this.msg = msg;
 		this.timer = timer;
 		this.ready = true;
 		this.setOnlinePlayersWithPerm(null);
@@ -95,7 +97,7 @@ public class Catchee {
 			if (currentCatchee == null) {
 				// Return random player.
 				this.catchee = (Player) this.players.toArray()[new Random().nextInt(this.players.size())];
-				this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.catchee.getName() + Constants.CATCHEE_ALERT);
+				this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.catchee.getName() + this.msg);
 			}
 			return;
 		}

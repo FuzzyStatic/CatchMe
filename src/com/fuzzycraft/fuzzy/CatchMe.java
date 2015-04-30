@@ -3,6 +3,7 @@ package com.fuzzycraft.fuzzy;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.fuzzycraft.fuzzy.commands.CatchWho;
 import com.fuzzycraft.fuzzy.listeners.CaughtCatchee;
 import com.fuzzycraft.fuzzy.listeners.SelectCatchee;
 import com.fuzzycraft.fuzzy.players.Catchee;
@@ -21,16 +22,19 @@ public class CatchMe extends JavaPlugin {
 	private CaughtCatchee cc;
 	
 	public void onEnable() {
-		this.catchee = new Catchee(this, Constants.PERM_CATCHEE, Constants.TIMER);
+		this.catchee = new Catchee(this, Constants.PERM_CATCHEE, Constants.CATCHEE_ALERT, Constants.TIMER);
 		this.catchee.newCatchee(null);
 		
-		// Create listener instances
+		// Create listener instances.
 		sc = new SelectCatchee(this.catchee);
 		cc = new CaughtCatchee(this.catchee, Constants.PERM_CATCHER);
 
-		// Register listeners
+		// Register listeners.
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(sc, this);
 		pm.registerEvents(cc, this);
+		
+		// Register commands.
+		getCommand("emsetcycle").setExecutor(new CatchWho(this, Constants.CATCHEE_ALERT));
 	}		
 }
