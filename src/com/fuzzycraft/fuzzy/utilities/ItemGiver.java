@@ -1,4 +1,4 @@
-package com.fuzzycraft.fuzzy;
+package com.fuzzycraft.fuzzy.utilities;
 
 import java.util.Random;
 
@@ -25,7 +25,7 @@ public class ItemGiver {
 	}
 	
 	/**
-	 * Give item to catcher.
+	 * Give item to catcher. If inventory is full, drop items.
 	 */
 	public void giveItem() {
 		if (this.catcher.getInventory().firstEmpty() != -1) {
