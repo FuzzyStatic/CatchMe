@@ -12,6 +12,6 @@ permissions:
     catchme.catcher:
         description: Let's a player catch a catchee (catch who is IT)
         default: true
-    catchme.catchwho
+    catchme.catchwho:
         description: Let's a player find out who the catchee (who is IT)
         default: true
