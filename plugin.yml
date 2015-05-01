@@ -5,11 +5,13 @@ commands:
     catchwho:
         description: Who is IT?
         permission: catchme.catchwho
-        default: true
 permissions:
     catchme.catchee:
         description: Let's a player become a catchee (become IT)
         default: true
     catchme.catcher:
         description: Let's a player catch a catchee (catch who is IT)
+        default: true
+    catchme.catchwho
+        description: Let's a player find out who the catchee (who is IT)
         default: true
