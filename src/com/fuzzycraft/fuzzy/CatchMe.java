@@ -4,10 +4,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.fuzzycraft.fuzzy.commands.CatchWho;
+import com.fuzzycraft.fuzzy.constants.Defaults;
 import com.fuzzycraft.fuzzy.listeners.CaughtCatchee;
 import com.fuzzycraft.fuzzy.listeners.SelectCatchee;
 import com.fuzzycraft.fuzzy.players.Catchee;
-import com.fuzzycraft.fuzzy.utilities.Constants;
 
 /**
  * 
@@ -22,12 +22,12 @@ public class CatchMe extends JavaPlugin {
 	private CaughtCatchee cc;
 	
 	public void onEnable() {
-		this.catchee = new Catchee(this, Constants.PERM_CATCHEE, Constants.CATCHEE_ALERT, Constants.TIMER);
+		this.catchee = new Catchee(this, Defaults.PERM_CATCHEE, Defaults.ALERT_CATCHEE, Defaults.TIMER);
 		this.catchee.setNewCatchee(null);
 		
 		// Create listener instances.
 		sc = new SelectCatchee(this.catchee);
-		cc = new CaughtCatchee(this.catchee, Constants.PERM_CATCHER);
+		cc = new CaughtCatchee(this.catchee, Defaults.PERM_CATCHER, Defaults.ALERT_CATCHEE_CAUGHT);
 
 		// Register listeners.
 		PluginManager pm = getServer().getPluginManager();
@@ -35,6 +35,6 @@ public class CatchMe extends JavaPlugin {
 		pm.registerEvents(cc, this);
 		
 		// Register commands.
-		getCommand("catchwho").setExecutor(new CatchWho(this.catchee, Constants.CATCHEE_ALERT, Constants.CATCHEE_ALERT_NONE));
+		getCommand("catchwho").setExecutor(new CatchWho(this.catchee, Defaults.ALERT_CATCHEE, Defaults.ALERT_CATCHEE_NONE));
 	}		
 }
