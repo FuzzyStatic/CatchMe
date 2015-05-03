@@ -5,6 +5,8 @@ A minecraft plugin API (sans configurations) that sets a player as the catchee a
 
 ### Releases
 
+[v1.3] (https://github.com/FuzzyStatic/CatchMe/releases/download/v1.2.1/CatchMe.jar) - Configuration
+
 [v1.2.1] (https://github.com/FuzzyStatic/CatchMe/releases/download/v1.2.1/CatchMe.jar) - Permissions and command
 
 [v1.0] (https://github.com/FuzzyStatic/CatchMe/releases/download/v1.0/CatchMe.jar) - Initial Release
