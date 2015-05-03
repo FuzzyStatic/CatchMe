@@ -19,14 +19,16 @@ public class CaughtCatchee implements Listener {
 
 	private Catchee catchee;
 	private String perm;
+	private String msg;
 		
 	/**
 	 * Insert catchee to catch.
 	 * @param catchee
 	 */
-	public CaughtCatchee(Catchee catchee, String perm) {
+	public CaughtCatchee(Catchee catchee, String perm, String msg) {
 		this.catchee = catchee;
 		this.perm = perm;
+		this.msg = msg;
 	}
 	
 	/**
@@ -39,7 +41,7 @@ public class CaughtCatchee implements Listener {
 
 		if (event.getRightClicked().equals(this.catchee.getCatchee()) && catchee.ready() && catcher.hasPermission(this.perm)) {
 			this.catchee.timer();
-			catcher.sendMessage("You've caught " + this.catchee.getCatchee().getName() + "! Congratulations! Have a reward!");
+			catcher.sendMessage(this.msg.replaceAll("&c", this.catchee.getCatchee().getName()));
 			new ItemGiver(catcher).giveItem();
 		}
 	}

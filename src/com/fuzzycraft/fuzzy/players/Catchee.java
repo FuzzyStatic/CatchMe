@@ -10,7 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.fuzzycraft.fuzzy.CatchMe;
-import com.fuzzycraft.fuzzy.utilities.Constants;
+import com.fuzzycraft.fuzzy.constants.Defaults;
 
 /**
  * 
@@ -93,11 +93,11 @@ public class Catchee {
 	 * @param currentCatchee
 	 */
 	public void setNewCatchee(Player currentCatchee) {
-		if (this.players != null && this.players.size() >= Constants.MIN_PLAYERS) {
+		if (this.players != null && this.players.size() >= Defaults.MIN_PLAYERS) {
 			if (currentCatchee == null) {
 				// Return random player.
 				this.catchee = (Player) this.players.toArray()[new Random().nextInt(this.players.size())];
-				this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.catchee.getName() + this.msg);
+				this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.msg.replaceAll("&c", this.catchee.getName()));
 			}
 			return;
 		}
@@ -110,14 +110,15 @@ public class Catchee {
 	 */
 	public void timer() {
 		this.ready = false;
+		this.ready = false;
 		
 		// Create the task anonymously and set run to true when finished.
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
 			public void run() {
-				ready = true;
 				setNewCatchee(null);
+				ready = true;
 			}	
-		}, this.timer);
+		}, this.timer * 20);
 	}
 	
 	/**
@@ -141,7 +142,7 @@ public class Catchee {
 	 * @return
 	 */
 	public boolean exists() {
-		if (this.catchee != null) {
+		if (this.catchee != null && this.ready) {
 			return true;
 		}
 		

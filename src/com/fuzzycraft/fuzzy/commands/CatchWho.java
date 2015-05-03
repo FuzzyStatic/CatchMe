@@ -1,6 +1,5 @@
 package com.fuzzycraft.fuzzy.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,7 +23,7 @@ public class CatchWho implements CommandExecutor {
 		if (cmd.getName().equalsIgnoreCase("catchwho")) {
 			if (sender instanceof Player) {
 				if (this.catchee.exists()) {
-					sender.sendMessage(ChatColor.GREEN + this.catchee.getCatchee().getName() + ChatColor.AQUA + this.msgCatchee);
+					sender.sendMessage(this.msgCatchee.replaceAll("&c", this.catchee.getCatchee().getName()));
 				} else {
 					sender.sendMessage(this.msgNoCatchee);
 				}
