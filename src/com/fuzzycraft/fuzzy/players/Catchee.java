@@ -87,8 +87,6 @@ public class Catchee {
 				
 				if (this.team != null) {
 					this.team.addPlayer(this.catchee);
-					System.out.println(this.team.getName());
-					System.out.println(this.team.getPlayers());
 				}
 				
 				this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.msg.replaceAll("&c", this.catchee.getName()));
