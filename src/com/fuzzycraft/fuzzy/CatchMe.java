@@ -53,7 +53,7 @@ public class CatchMe extends JavaPlugin {
 			this.manager = Bukkit.getScoreboardManager();
 			this.board = manager.getNewScoreboard();
 			this.team = board.registerNewTeam("catchee");
-			this.team.setSuffix(ChatColor.YELLOW + " [IT]");
+			this.team.setSuffix(ChatColor.YELLOW + getConfig().getString(Paths.SUFFIX_TAG));
 			this.catchee.setBoard(this.board);
 			this.catchee.setTeam(this.team);
 		}
