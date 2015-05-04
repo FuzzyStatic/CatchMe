@@ -8,6 +8,8 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import com.fuzzycraft.fuzzy.CatchMe;
 
@@ -27,6 +29,8 @@ public class Catchee {
 	
 	private Collection<? extends Player> players;
 	private Player catchee;
+	private Scoreboard board;
+	private Team team;
 	
 	/**
 	 * Set up initial catchee.
@@ -45,27 +49,6 @@ public class Catchee {
 	}
 	
 	/**
-	 * Find online players.
-	 */
-	@Deprecated
-	public void setOnlinePlayers(Player leavingPlayer) {
-		// Create mutable list of players.
-		List<Player> players = new ArrayList<Player>();
-				
-		for (Player player : this.plugin.getServer().getOnlinePlayers()) {					
-			players.add(player);
-		}
-				
-		// Remove leaving player.
-		if (leavingPlayer != null) {
-			players.remove(leavingPlayer);
-		}
-				
-		// Set collection of players to list.
-		this.players = players;
-	}
-	
-	/**
 	 * Find online players with permission.
 	 * @param player 
 	 */
@@ -76,6 +59,10 @@ public class Catchee {
 		for (Player player : this.plugin.getServer().getOnlinePlayers()) {			
 			if (player.hasPermission(this.perm)) {
 				players.add(player);
+				
+				if (board != null) {
+					player.setScoreboard(this.board);
+				}
 			}
 		}
 		
@@ -97,6 +84,13 @@ public class Catchee {
 			if (currentCatchee == null) {
 				// Return random player.
 				this.catchee = (Player) this.players.toArray()[new Random().nextInt(this.players.size())];
+				
+				if (this.team != null) {
+					this.team.addPlayer(this.catchee);
+					System.out.println(this.team.getName());
+					System.out.println(this.team.getPlayers());
+				}
+				
 				this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.msg.replaceAll("&c", this.catchee.getName()));
 			}
 			return;
@@ -110,15 +104,31 @@ public class Catchee {
 	 */
 	public void timer() {
 		this.ready = false;
-		this.ready = false;
 		
 		// Create the task anonymously and set run to true when finished.
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
 			public void run() {
+				setOnlinePlayersWithPerm(null);
 				setNewCatchee(null);
 				ready = true;
 			}	
 		}, this.timer * 20);
+	}
+	
+	/**
+	 * Set board.
+	 * @param board
+	 */
+	public void setBoard(Scoreboard board) {
+		this.board = board;
+	}
+	
+	/**
+	 * Set team.
+	 * @param team
+	 */
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 	
 	/**
@@ -172,5 +182,21 @@ public class Catchee {
 	 */
 	public boolean ready() {
 		return ready;
+	}
+	
+	/**
+	 * Set board.
+	 * @param board
+	 */
+	public Scoreboard getBoard() {
+		return this.board;
+	}
+	
+	/**
+	 * Set team.
+	 * @param team
+	 */
+	public Team getTeam() {
+		return this.team;
 	}
 }

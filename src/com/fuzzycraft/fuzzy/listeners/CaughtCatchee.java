@@ -38,10 +38,12 @@ public class CaughtCatchee implements Listener {
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		Player catcher = event.getPlayer();
+		Player catchee = this.catchee.getCatchee();
 
-		if (event.getRightClicked().equals(this.catchee.getCatchee()) && catchee.ready() && catcher.hasPermission(this.perm)) {
+		if (event.getRightClicked().equals(this.catchee.getCatchee()) && this.catchee.ready() && catcher.hasPermission(this.perm)) {
 			this.catchee.timer();
-			catcher.sendMessage(this.msg.replaceAll("&c", this.catchee.getCatchee().getName()));
+			this.catchee.getTeam().removePlayer(catchee);
+			catcher.sendMessage(this.msg.replaceAll("&c", catchee.getName()));
 			new ItemGiver(catcher).giveItem();
 		}
 	}

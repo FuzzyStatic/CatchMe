@@ -1,7 +1,12 @@
 package com.fuzzycraft.fuzzy;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.Team;
 
 import com.fuzzycraft.fuzzy.commands.CatchWho;
 import com.fuzzycraft.fuzzy.constants.Defaults;
@@ -23,6 +28,10 @@ public class CatchMe extends JavaPlugin {
 	private SelectCatchee sc;
 	private CaughtCatchee cc;
 	
+	private ScoreboardManager manager;
+	private Scoreboard board;
+	private Team team;
+	
 	public void onEnable() {		
 		// Configuration setup.
 		getDataFolder().mkdir();
@@ -32,11 +41,21 @@ public class CatchMe extends JavaPlugin {
 		getConfig().addDefault(Paths.MIN_PLAYERS, Defaults.MIN_PLAYERS);
 		getConfig().addDefault(Paths.TIMER, Defaults.TIMER);
 		getConfig().options().copyDefaults(true);
-		saveConfig();	
+		saveConfig();
 		
 		// Set catchee
 		this.catchee = new Catchee(this, Permissions.CATCHEE, getConfig().getString(Paths.ALERT_CATCHEE), getConfig().getInt(Paths.MIN_PLAYERS), getConfig().getInt(Paths.TIMER));
-		this.catchee.setNewCatchee(null);
+		
+		// Set scoreboard
+		this.manager = Bukkit.getScoreboardManager();
+		this.board = manager.getNewScoreboard();
+		this.team = board.registerNewTeam("catchee");
+		this.team.setSuffix(ChatColor.YELLOW + " [IT]");
+		this.catchee.setBoard(this.board);
+		this.catchee.setTeam(this.team);
+		
+		// Start next game
+		this.catchee.timer();
 		
 		// Create listener instances.
 		sc = new SelectCatchee(this.catchee);
