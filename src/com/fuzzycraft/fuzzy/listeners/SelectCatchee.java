@@ -1,5 +1,6 @@
 package com.fuzzycraft.fuzzy.listeners;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -46,9 +47,11 @@ public class SelectCatchee implements Listener {
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {		
 		this.catchee.setOnlinePlayersWithPerm(this.catchee.getCatchee());
+		Player catchee = this.catchee.getCatchee();
 		
 		if (this.catchee.ready()) {
-			if (event.getPlayer().equals(this.catchee.getCatchee())) {
+			if (event.getPlayer().equals(catchee)) {
+				this.catchee.getTeam().removePlayer(catchee);
 				this.catchee.setNewCatchee(null);
 			} else {
 				this.catchee.setNewCatchee(this.catchee.getCatchee());
