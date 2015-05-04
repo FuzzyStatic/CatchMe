@@ -40,6 +40,8 @@ public class CatchMe extends JavaPlugin {
 		getConfig().addDefault(Paths.ALERT_CATCHEE_NONE, Defaults.ALERT_CATCHEE_NONE);
 		getConfig().addDefault(Paths.MIN_PLAYERS, Defaults.MIN_PLAYERS);
 		getConfig().addDefault(Paths.TIMER, Defaults.TIMER);
+		getConfig().addDefault(Paths.SUFFIX_TAG, Defaults.SUFFIX_TAG);
+		getConfig().addDefault(Paths.SUFFIX_ALLOW, Defaults.SUFFIX_ALLOW);
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 		
@@ -47,12 +49,14 @@ public class CatchMe extends JavaPlugin {
 		this.catchee = new Catchee(this, Permissions.CATCHEE, getConfig().getString(Paths.ALERT_CATCHEE), getConfig().getInt(Paths.MIN_PLAYERS), getConfig().getInt(Paths.TIMER));
 		
 		// Set scoreboard
-		this.manager = Bukkit.getScoreboardManager();
-		this.board = manager.getNewScoreboard();
-		this.team = board.registerNewTeam("catchee");
-		this.team.setSuffix(ChatColor.YELLOW + " [IT]");
-		this.catchee.setBoard(this.board);
-		this.catchee.setTeam(this.team);
+		if (getConfig().getBoolean(Paths.SUFFIX_ALLOW)) {
+			this.manager = Bukkit.getScoreboardManager();
+			this.board = manager.getNewScoreboard();
+			this.team = board.registerNewTeam("catchee");
+			this.team.setSuffix(ChatColor.YELLOW + " [IT]");
+			this.catchee.setBoard(this.board);
+			this.catchee.setTeam(this.team);
+		}
 		
 		// Start next game
 		this.catchee.timer();
