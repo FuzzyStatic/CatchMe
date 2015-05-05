@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -127,6 +128,12 @@ public class Catchee {
 	 */
 	public void setTeam(Team team) {
 		this.team = team;
+	}
+	
+	public void clearTeam() {
+		for (OfflinePlayer player : this.team.getPlayers()) {
+			this.team.removePlayer(player);
+		}
 	}
 	
 	/**

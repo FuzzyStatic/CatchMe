@@ -51,7 +51,7 @@ public class SelectCatchee implements Listener {
 		
 		if (this.catchee.ready()) {
 			if (event.getPlayer().equals(catchee)) {
-				this.catchee.getTeam().removePlayer(catchee);
+				this.catchee.clearTeam();
 				this.catchee.setNewCatchee(null);
 			} else {
 				this.catchee.setNewCatchee(this.catchee.getCatchee());

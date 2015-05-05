@@ -42,7 +42,7 @@ public class CaughtCatchee implements Listener {
 
 		if (event.getRightClicked().equals(this.catchee.getCatchee()) && this.catchee.ready() && catcher.hasPermission(this.perm)) {
 			this.catchee.timer();
-			this.catchee.getTeam().removePlayer(catchee);
+			this.catchee.clearTeam();
 			catcher.sendMessage(this.msg.replaceAll("&c", catchee.getName()));
 			new ItemGiver(catcher).giveItem();
 		}
