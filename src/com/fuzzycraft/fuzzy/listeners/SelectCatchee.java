@@ -46,7 +46,7 @@ public class SelectCatchee implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {		
-		this.catchee.setOnlinePlayersWithPerm(this.catchee.getCatchee());
+		this.catchee.setOnlinePlayersWithPerm(event.getPlayer());
 		Player catchee = this.catchee.getCatchee();
 		
 		if (this.catchee.ready()) {
