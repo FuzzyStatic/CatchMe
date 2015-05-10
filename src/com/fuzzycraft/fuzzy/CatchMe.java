@@ -24,26 +24,13 @@ import com.fuzzycraft.fuzzy.players.Catchee;
 
 public class CatchMe extends JavaPlugin {
 
-	private Catchee catchee;
-	private SelectCatchee sc;
-	private CaughtCatchee cc;
-	
+	private Catchee catchee;	
 	private ScoreboardManager manager;
 	private Scoreboard board;
 	private Team team;
 	
 	public void onEnable() {		
-		// Configuration setup.
-		getDataFolder().mkdir();
-		getConfig().addDefault(Paths.ALERT_CATCHEE, Defaults.ALERT_CATCHEE);
-		getConfig().addDefault(Paths.ALERT_CATCHEE_CAUGHT, Defaults.ALERT_CATCHEE_CAUGHT);
-		getConfig().addDefault(Paths.ALERT_CATCHEE_NONE, Defaults.ALERT_CATCHEE_NONE);
-		getConfig().addDefault(Paths.MIN_PLAYERS, Defaults.MIN_PLAYERS);
-		getConfig().addDefault(Paths.TIMER, Defaults.TIMER);
-		getConfig().addDefault(Paths.SUFFIX_TAG, Defaults.SUFFIX_TAG);
-		getConfig().addDefault(Paths.SUFFIX_ALLOW, Defaults.SUFFIX_ALLOW);
-		getConfig().options().copyDefaults(true);
-		saveConfig();
+		configDefaults();
 		
 		// Set catchee
 		this.catchee = new Catchee(this, Permissions.CATCHEE, getConfig().getString(Paths.ALERT_CATCHEE), getConfig().getInt(Paths.MIN_PLAYERS), getConfig().getInt(Paths.TIMER));
@@ -61,16 +48,28 @@ public class CatchMe extends JavaPlugin {
 		// Start next game
 		this.catchee.timer();
 		
-		// Create listener instances.
-		sc = new SelectCatchee(this.catchee);
-		cc = new CaughtCatchee(this.catchee, Permissions.CATCHER, getConfig().getString(Paths.ALERT_CATCHEE_CAUGHT));
-
-		// Register listeners.
-		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(sc, this);
-		pm.registerEvents(cc, this);
+		registerListeners();
 		
 		// Register commands.
 		getCommand("catchwho").setExecutor(new CatchWho(this.catchee, Permissions.CATCHWHO, getConfig().getString(Paths.ALERT_CATCHEE), getConfig().getString(Paths.ALERT_CATCHEE_NONE)));
-	}		
+	}
+	
+	public void registerListeners() {
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(new SelectCatchee(this.catchee), this);
+		pm.registerEvents(new CaughtCatchee(this.catchee, Permissions.CATCHER, getConfig().getString(Paths.ALERT_CATCHEE_CAUGHT)), this);
+	}
+	
+	public void configDefaults() {
+		getDataFolder().mkdir();
+		getConfig().addDefault(Paths.ALERT_CATCHEE, Defaults.ALERT_CATCHEE);
+		getConfig().addDefault(Paths.ALERT_CATCHEE_CAUGHT, Defaults.ALERT_CATCHEE_CAUGHT);
+		getConfig().addDefault(Paths.ALERT_CATCHEE_NONE, Defaults.ALERT_CATCHEE_NONE);
+		getConfig().addDefault(Paths.MIN_PLAYERS, Defaults.MIN_PLAYERS);
+		getConfig().addDefault(Paths.TIMER, Defaults.TIMER);
+		getConfig().addDefault(Paths.SUFFIX_TAG, Defaults.SUFFIX_TAG);
+		getConfig().addDefault(Paths.SUFFIX_ALLOW, Defaults.SUFFIX_ALLOW);
+		getConfig().options().copyDefaults(true);
+		saveConfig();
+	}
 }
