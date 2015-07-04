@@ -86,9 +86,8 @@ public class Catchee {
 				// Return random player.
 				this.catchee = (Player) this.players.toArray()[new Random().nextInt(this.players.size())];
 				
-				if (this.team != null) {
-					this.team.addPlayer(this.catchee);
-				}
+				clearTeam();
+				this.team.addPlayer(this.catchee);
 				
 				this.plugin.getServer().broadcastMessage(ChatColor.GREEN + this.msg.replaceAll("&c", this.catchee.getName()));
 			}
@@ -104,7 +103,7 @@ public class Catchee {
 	public void timer() {
 		this.ready = false;
 		
-		// Create the task anonymously and set run to true when finished.
+		// Create the task anonymously and set ready to true when finished.
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
 			public void run() {
 				setOnlinePlayersWithPerm(null);

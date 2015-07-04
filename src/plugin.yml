@@ -1,6 +1,6 @@
 name:  CatchMe
 main:  com.fuzzycraft.fuzzy.CatchMe
-version:  1.4
+version:  1.4.1
 commands:
     catchwho:
         description: Who is IT?
